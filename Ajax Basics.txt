@@ -1,0 +1,23 @@
+The file index.html is called with the command npm start because of the server settings (see server.js)
+In index.html there is one input field with id = fname and two divs that will be overwritten by Javascript
+The client does this:
+0. Starts two listeners for the input field (one for internal, one for external)
+   (yes I know this is very redundant)
+1. Puts the input in an agreeable format (3 digits, with randomizer if NaN detected)
+2. Converts to a color string of the form "#rrggbb" based on multiplying each digit of the input
+3. Some additional bad-format handling code
+4. Formats the internal div (cute)
+5. Generates an Ajax POST request to the server so that it can return the color string
+6. Reads back the color string
+7. Formats the external div (extr)
+8. If all goes well, cute and extr look exactly the same except for randomizing (NaN case)
+
+The server file creates the http and express objects, starts the server, and handles the POST request
+The POST request is handled by serving the input to the forming function (same as in client)
+And then returning the result using res.send
+
+Note PORT calculation to survive Heroku config: const PORT =  process.env.PORT || 3200;
+
+To avoid having to close and reopen server:
+Nodemon! use >npm run ndev to run it
+  (this is because of the script in package.json - avoid deploying to prod)

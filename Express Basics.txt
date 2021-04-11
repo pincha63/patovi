@@ -1,0 +1,18 @@
+There are 3 files one writes:
+  package.json
+  server.js
+  index.html
+The first two are generic (server will eventually have the routes/endpoints)
+The third one contains (or references) all the HTML, CSS and client-side JS that goes into the website.
+Port is 3000 but can be configured
+
+
+************ to kill the processes: taskkill /im node.exe /F
+
+
+
+
+References:
+https://javascript.plainenglish.io/create-a-single-page-website-using-node-js-and-express-js-a0b53e396e4f
+https://expressjs.com/en/starter/generator.html
+https://www.w3schools.com/w3css/default.asp
