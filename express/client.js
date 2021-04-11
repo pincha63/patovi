@@ -28,7 +28,7 @@ function externalHandler(myInput, payload) {
    })
    .then(response => response.json()) // converts json to javascript object (sic)
    .then(data => {
-       console.log(`Parsed data :: ${data.color} :: ${luma}`);
+       console.log(`Parsed data :: ${data.color} :: ${data.luma}`);
        document.getElementById("extr").innerHTML = `Server ${myInput} :: color ${data.color} luma ${data.luma}`;
        document.getElementById("extr").style.backgroundColor = data.color
        document.getElementById("extr").style.color = (data.luma < 3.9) ? "#FFFDFD" : "#000100"
@@ -46,5 +46,35 @@ function inputHandler() {
     externalHandler(externalInput, JSON.stringify({ a: externalInput , b: "837" }))
 }
 
+function randHandler() {
+// disable the other listener for the duration, and during the duration...
+// call the following one each 1500 msec
+    console.log("Start randHandler")
+    let fn = document.querySelector("#fname");
+    fn.removeEventListener("input" , inputHandler)
+    let bui = Math.floor(1000 * Math.random());
+    let bue = Math.floor(1000 * Math.random());
+    internalHandler(bui)
+    externalHandler(bue, JSON.stringify({ a: bue , b: "000" }))
+    let i = 0
+    let intervalP = setInterval(() => {
+        console.log("i = " + i)
+        let xui = Math.floor(1000 * Math.random());
+        let xue = Math.floor(1000 * Math.random());
+        console.log(xui)
+        console.log(xue)
+        internalHandler(xui)
+        externalHandler(xue, JSON.stringify({ a: xue , b: "000" }))
+        if (++i === 10) {
+            window.clearInterval(intervalP);
+            fn.addEventListener("input" , inputHandler);
+        }
+    }, 1133)    
+}
+
 let fn = document.querySelector("#fname");
 fn.addEventListener("input" , inputHandler); //  tu is actually http://localhost:3200/tu
+let rn = document.querySelector("#randa");
+rn.addEventListener("click" , randHandler);
+rn.addEventListener("click", () => { console.log("Button was clicked")});
+console.log("Setup done")
