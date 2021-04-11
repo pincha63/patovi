@@ -33,7 +33,7 @@ function externalHandler(myInput, payload) {
        document.getElementById("extr").style.backgroundColor = data.color
        document.getElementById("extr").style.color = (data.luma < 3.9) ? "#FFFDFD" : "#000100"
    })
-   .catch(err => console.log("Error"));
+   .catch(err => console.log("Server call error"));
 }
 
 function inputHandler() {
