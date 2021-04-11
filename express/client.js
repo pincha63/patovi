@@ -47,11 +47,11 @@ function inputHandler() {
 }
 
 function randHandler() {
-// disable the other listener for the duration, and during the duration...
-// call the following one each 1500 msec
     console.log("Start randHandler")
-    let fn = document.querySelector("#fname");
+    // let fn = document.querySelector("#fname");
     fn.removeEventListener("input" , inputHandler)
+    // let rn = document.querySelector("#randa");
+    rn.removeEventListener("click" , randHandler);
     let bui = Math.floor(1000 * Math.random());
     let bue = Math.floor(1000 * Math.random());
     internalHandler(bui)
@@ -68,6 +68,7 @@ function randHandler() {
         if (++i === 10) {
             window.clearInterval(intervalP);
             fn.addEventListener("input" , inputHandler);
+            rn.addEventListener("click" , randHandler);            
         }
     }, 1133)    
 }
@@ -76,5 +77,10 @@ let fn = document.querySelector("#fname");
 fn.addEventListener("input" , inputHandler); //  tu is actually http://localhost:3200/tu
 let rn = document.querySelector("#randa");
 rn.addEventListener("click" , randHandler);
-rn.addEventListener("click", () => { console.log("Button was clicked")});
+// this is to suppress sending the content of fname as a parameter to the URL
+fn.addEventListener('keypress', function(event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+    }
+});
 console.log("Setup done")
