@@ -1,26 +1,29 @@
-function internalHandler(u) {
-    function pad(n, width = 2, z = 0) {
-        wideP = ((n += '').length >= width); // tests if n has enough width
-        return wideP ? n : new Array(width - n.length + 1).join(z) + n;
-    }
-
-    function d_str(d, m = 28) {
-        // gets three values 0..9 for R, G, B and creates a color Hex string like #7A6BDD
-        let g = (z) => pad((m * z).toString(16), 2, 0).substring(0, 2);
-        let d0 = d % 10;
-        let d1 = 0.1 * ((d - d0) % 100);
-        let d2 = (Math.floor(d / 100)) % 10;
-        let [g0, g1, g2] = [d0, d1, d2].map((z) => g(z)); // pad and display as Hex
-        return {color: ("#" + g2 + g1 + g0) , luma: (0.21 * d2 + 0.7 * d1 + 0.11 * d0).toFixed(2)};
-    }
-    color = d_str(u).color;
-    luma = d_str(u).luma;
-    document.getElementById("cute").innerHTML = `Client ${u} :: color ${color} luma ${luma}`;
-    document.getElementById("cute").style.color = (luma < 3.9) ? "#FFFDFD" : "#000100"
-    document.getElementById("cute").style.backgroundColor = color;
+function drawElement(eName, u, bcolor, luma) {
+    document.getElementById(eName).innerHTML = `${u} :: color ${bcolor} :: luma ${luma}`;
+    document.getElementById(eName).style.backgroundColor = bcolor
+    document.getElementById(eName).style.color = (luma < 3.9) ? "#FFFDFD" : "#000100"
 }
 
-function externalHandler(myInput, payload) {
+function pad(n, width = 2, z = 0) {
+    wideP = ((n += '').length >= width); // tests if n has enough width
+    return wideP ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function d_str(d, m = 28) {
+    // gets three values 0..9 for R, G, B and creates a color Hex string like #7A6BDD
+    let g = (z) => pad((m * z).toString(16), 2, 0).substring(0, 2);
+    let d0 = d % 10;
+    let d1 = 0.1 * ((d - d0) % 100);
+    let d2 = (Math.floor(d / 100)) % 10;
+    let [g0, g1, g2] = [d0, d1, d2].map((z) => g(z)); // pad and display as Hex
+    return {color: ("#" + g2 + g1 + g0) , luma: (0.21 * d2 + 0.7 * d1 + 0.11 * d0).toFixed(2)};
+}
+
+function internalHandler(u) {
+   drawElement("cute", u, d_str(u).color, d_str(u).luma)
+}
+
+function externalHandler(u, payload) {
     fetch('/tu', {
         method: "POST",
         body: payload,
@@ -29,9 +32,7 @@ function externalHandler(myInput, payload) {
    .then(response => response.json()) // converts json to javascript object (sic)
    .then(data => {
        console.log(`Parsed data :: ${data.color} :: ${data.luma}`);
-       document.getElementById("extr").innerHTML = `Server ${myInput} :: color ${data.color} luma ${data.luma}`;
-       document.getElementById("extr").style.backgroundColor = data.color
-       document.getElementById("extr").style.color = (data.luma < 3.9) ? "#FFFDFD" : "#000100"
+       drawElement("extr", u, data.color, data.luma)
    })
    .catch(err => console.log("Server call error"));
 }
@@ -68,7 +69,7 @@ function randHandler() {
 
 let fn = document.querySelector("#fname"); // free text entry field
 fn.addEventListener("input" , nonRandom);
-let rn = document.querySelector("#randa"); // button Randomize Me
+let rn = document.querySelector("#randa"); // button Randomize
 rn.addEventListener("click" , randHandler);
 // the following avoids sending fname=value as a parameter to the URL
 fn.addEventListener('keypress', function(event) { 

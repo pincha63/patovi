@@ -3,6 +3,7 @@ body {  background-color: #9CCCCC; }
 p {
   font-family: sans-serif;
   padding: 35px;
+  text-align: center;
   width: 283px;
   margin: auto;
   border-style:solid;
