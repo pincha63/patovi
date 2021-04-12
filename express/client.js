@@ -1,27 +1,24 @@
+function pad(n, w = 2, z = 0) {
+    return ((n += '').length >= w) ? n : new Array(w - n.length + 1).join(z) + n;
+}
 function drawElement(eName, u, bcolor, luma) {
-    document.getElementById(eName).innerHTML = `${u} :: color ${bcolor} :: luma ${luma}`;
+    let msgString = "" + pad(u,3,0) + ` :: color ${bcolor} :: luma ${luma}`
+    document.getElementById(eName).innerHTML = msgString
     document.getElementById(eName).style.backgroundColor = bcolor
     document.getElementById(eName).style.color = (luma < 3.9) ? "#FFFDFD" : "#000100"
 }
 
-function pad(n, width = 2, z = 0) {
-    wideP = ((n += '').length >= width); // tests if n has enough width
-    return wideP ? n : new Array(width - n.length + 1).join(z) + n;
-}
-
 function d_str(d, m = 28) {
-    // gets three values 0..9 for R, G, B and creates a color Hex string like #7A6BDD
+    // unpack digits as source of R, G, B and transform to color Hex string like #7A6BDD
     let g = (z) => pad((m * z).toString(16), 2, 0).substring(0, 2);
     let d0 = d % 10;
     let d1 = 0.1 * ((d - d0) % 100);
     let d2 = (Math.floor(d / 100)) % 10;
     let [g0, g1, g2] = [d0, d1, d2].map((z) => g(z)); // pad and display as Hex
-    return {color: ("#" + g2 + g1 + g0) , luma: (0.21 * d2 + 0.7 * d1 + 0.11 * d0).toFixed(2)};
+    return {color: ("#"+g2+g1+g0) , luma: (0.21*d2 + 0.7*d1 + 0.11*d0).toFixed(2)};
 }
 
-function internalHandler(u) {
-   drawElement("cute", u, d_str(u).color, d_str(u).luma)
-}
+let internalHandler = (u) => drawElement("cute", u, d_str(u).color, d_str(u).luma)
 
 function externalHandler(u, payload) {
     fetch('/tu', {
@@ -50,7 +47,7 @@ function run_calc(i=-1, randP=false) {
     externalHandler(extVal, JSON.stringify({ a: extVal, b: "0" }))
 }
 
-let nonRandom = () => run_calc(-999,false)
+let nonRandom = () => run_calc(-999, false)
 
 function randHandler() {
     fn.removeEventListener("input" , nonRandom)
