@@ -3,7 +3,7 @@ body {  background-color: #9CCCCC; }
 p {
   font-family: sans-serif;
   padding: 35px;
-  width: 333px;
+  width: 283px;
   margin: auto;
   border-style:solid;
   border-radius:4px
@@ -12,7 +12,7 @@ p {
 #action {
   font-family: sans-serif;
   padding: 35px;
-  width: 333px;
+  width: 283px;
   margin: auto;
 }
 
@@ -20,6 +20,6 @@ p {
   font-family: sans-serif;
   padding: 35px;
   background-color: #e7d6b1;
-  width: 333px;
+  width: 283px;
   margin: auto;
 }

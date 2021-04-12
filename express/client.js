@@ -36,51 +36,42 @@ function externalHandler(myInput, payload) {
    .catch(err => console.log("Server call error"));
 }
 
-function inputHandler() {
-    let x = document.getElementById("fname").value;
-    let u = parseInt(x.substring(0, 3)); 
-    internalInput = ((u < 0) || isNaN(u)) ? Math.floor(1000*Math.random()) : u
-    externalInput = ((u < 0) || isNaN(u)) ? Math.floor(1000*Math.random()) : u
-    internalHandler(internalInput)
-    // let payload = JSON.stringify({ a: externalInput , b: "837" })
-    externalHandler(externalInput, JSON.stringify({ a: externalInput , b: "837" }))
+let r3d = () => Math.floor(1000*Math.random()) // random 3 digits
+
+function run_calc(i=-1, randP=false) { 
+    let x = (randP) ? 999 : document.getElementById("fname").value;
+    let u = (randP) ? r3d() : parseInt(x.substring(0, 3));
+    let v = (randP) ? r3d() : parseInt(x.substring(0, 3));
+    let intVal = ((u < 0) || isNaN(u)) ? r3d() : u
+    let extVal = ((v < 0) || isNaN(v)) ? r3d() : v
+    console.log(`i = ${i} :: internal ${intVal} :: external ${extVal}`)
+    internalHandler(intVal)
+    externalHandler(extVal, JSON.stringify({ a: extVal, b: "0" }))
 }
+
+let nonRandom = () => run_calc(-999,false)
 
 function randHandler() {
-    console.log("Start randHandler")
-    // let fn = document.querySelector("#fname");
-    fn.removeEventListener("input" , inputHandler)
-    // let rn = document.querySelector("#randa");
-    rn.removeEventListener("click" , randHandler);
-    let bui = Math.floor(1000 * Math.random());
-    let bue = Math.floor(1000 * Math.random());
-    internalHandler(bui)
-    externalHandler(bue, JSON.stringify({ a: bue , b: "000" }))
+    fn.removeEventListener("input" , nonRandom)
+    rn.removeEventListener("click" , randHandler)
     let i = 0
+    run_calc(i++, true)
     let intervalP = setInterval(() => {
-        console.log("i = " + i)
-        let xui = Math.floor(1000 * Math.random());
-        let xue = Math.floor(1000 * Math.random());
-        console.log(xui)
-        console.log(xue)
-        internalHandler(xui)
-        externalHandler(xue, JSON.stringify({ a: xue , b: "000" }))
+        run_calc(i, true)
         if (++i === 10) {
             window.clearInterval(intervalP);
-            fn.addEventListener("input" , inputHandler);
+            fn.addEventListener("input" , nonRandom);
             rn.addEventListener("click" , randHandler);            
         }
-    }, 1133)    
+    }, 1330)    
 }
 
-let fn = document.querySelector("#fname");
-fn.addEventListener("input" , inputHandler); //  tu is actually http://localhost:3200/tu
-let rn = document.querySelector("#randa");
+let fn = document.querySelector("#fname"); // free text entry field
+fn.addEventListener("input" , nonRandom);
+let rn = document.querySelector("#randa"); // button Randomize Me
 rn.addEventListener("click" , randHandler);
-// this is to suppress sending the content of fname as a parameter to the URL
-fn.addEventListener('keypress', function(event) {
-    if (event.keyCode == 13) {
-        event.preventDefault();
-    }
+// the following avoids sending fname=value as a parameter to the URL
+fn.addEventListener('keypress', function(event) { 
+    if (event.keyCode == 13) { event.preventDefault(); }
 });
 console.log("Setup done")
