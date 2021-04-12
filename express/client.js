@@ -1,6 +1,7 @@
 function pad(n, w = 2, z = 0) {
     return ((n += '').length >= w) ? n : new Array(w - n.length + 1).join(z) + n;
 }
+
 function drawElement(eName, u, bcolor, luma) {
     let msgString = "" + pad(u,3,0) + ` :: color ${bcolor} :: luma ${luma}`
     document.getElementById(eName).innerHTML = msgString
