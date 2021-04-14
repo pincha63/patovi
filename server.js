@@ -30,7 +30,17 @@ app.get('/tu', function(req,res) {
 });
 
 app.post('/tu', function(req, res) {
-    res.send({color : d_str(req.body.a).color, luma : d_str(req.body.a).luma})
+//    res.send({color : d_str(req.body.a).color, luma : d_str(req.body.a).luma})
+    const response = {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
+        body: {color : d_str(req.body.a).color, luma : d_str(req.body.a).luma},
+    };
+    res.send(response)
 });
 
 app.post('/remote', function(req, res) {

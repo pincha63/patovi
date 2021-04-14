@@ -23,7 +23,7 @@ let internalHandler = (u) => drawElement("cute", u, d_str(u).color, d_str(u).lum
 
 function externalHandler(u, payload) {
     let myRes = '/tu'
-    myRes = 'https://patovi.nfshost.com/remote'
+    //myRes = 'https://patovi.nfshost.com/remote'
     fetch(myRes, {
         method: "POST",
         body: payload,
@@ -31,7 +31,7 @@ function externalHandler(u, payload) {
    })
    .then(response => response.json()) // converts json to javascript object (sic)
    .then(data => {
-       console.log(`Parsed data :: ${data.color} :: ${data.luma}`);
+       console.log(`Parsed data :: ${data.body.color} :: ${data.body.luma}`);
        drawElement("extr", u, data.body.color, data.body.luma)
    })
    .catch(err => console.log("Server call error"));
