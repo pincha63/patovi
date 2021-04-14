@@ -23,7 +23,7 @@ let internalHandler = (u) => drawElement("cute", u, d_str(u).color, d_str(u).lum
 
 function externalHandler(u, payload) {
     let myRes = '/tu'
-    myRes = '/remote'
+    myRes = 'https://patovi.nfshost.com/remote'
     fetch(myRes, {
         method: "POST",
         body: payload,
