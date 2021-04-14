@@ -31,7 +31,7 @@ function externalHandler(u, payload) {
    })
    .then(response => response.json()) // converts json to javascript object (sic)
    .then(data => {
-       console.log(`Parsed data :: ${data.body.color} :: ${data.body.luma}`);
+       //console.log(`Parsed data :: ${data.body.color} :: ${data.body.luma}`);
        drawElement("extr", u, data.body.color, data.body.luma)
    })
    .catch(err => console.log("Server call error"));
