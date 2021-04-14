@@ -22,7 +22,8 @@ function d_str(d, m = 28) {
 let internalHandler = (u) => drawElement("cute", u, d_str(u).color, d_str(u).luma)
 
 function externalHandler(u, payload) {
-    let myRes = 0 ? '/tu' : '/remote'
+    let myRes = '/tu'
+    myRes = '/remote'
     fetch(myRes, {
         method: "POST",
         body: payload,
