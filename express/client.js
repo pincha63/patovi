@@ -22,7 +22,8 @@ function d_str(d, m = 28) {
 let internalHandler = (u) => drawElement("cute", u, d_str(u).color, d_str(u).luma)
 
 function externalHandler(u, payload) {
-    fetch('/tu', {
+    let myRes = 0 ? '/tu' : '/remote'
+    fetch(myRes, {
         method: "POST",
         body: payload,
         headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -30,7 +31,7 @@ function externalHandler(u, payload) {
    .then(response => response.json()) // converts json to javascript object (sic)
    .then(data => {
        console.log(`Parsed data :: ${data.color} :: ${data.luma}`);
-       drawElement("extr", u, data.color, data.luma)
+       drawElement("extr", u, data.body.color, data.body.luma)
    })
    .catch(err => console.log("Server call error"));
 }

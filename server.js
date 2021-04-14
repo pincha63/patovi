@@ -33,6 +33,20 @@ app.post('/tu', function(req, res) {
     res.send({color : d_str(req.body.a).color, luma : d_str(req.body.a).luma})
 });
 
+app.post('/remote', function(req, res) {
+    const response = {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
+        body: {color : d_str(req.body.a).color, luma : d_str(req.body.a).luma},
+    };
+    res.send(response)
+});
+
+
 const server = http.createServer(app);
 const PORT =  process.env.PORT || 3200;
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
