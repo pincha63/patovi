@@ -27,7 +27,7 @@ function externalHandler(u, payload) {
     fetch(myRes, {
         method: "POST",
         body: payload,
-        headers: {"Content-type": "application/json; charset=UTF-8"}
+        //headers: {"Content-type": "application/json; charset=UTF-8"}
    })
    .then(response => response.json()) // converts json to javascript object (sic)
    .then(data => {
@@ -47,7 +47,7 @@ function run_calc(i=-1, randP=false) {
     let extVal = ((v < 0) || isNaN(v)) ? r3d() : v
     console.log(`i = ${i} :: internal ${intVal} :: external ${extVal}`)
     internalHandler(intVal)
-    externalHandler(extVal, JSON.stringify({ a: extVal, b: "0" }))
+    externalHandler(447, JSON.stringify({ a: extVal, b: "0" }))
 }
 
 let nonRandom = () => run_calc(-999, false)

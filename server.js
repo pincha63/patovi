@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 function pad(n, width=2, z=0) {
     wideP = ((n+='').length >= width) 
@@ -20,8 +21,20 @@ function d_str(d, m=28) {
 const app = express();
 app.use(express.json());
 app.use(express.static("express"));
+// app.use(cors()) // HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-app.get('/', function(req,res) {
+const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+    "Access-Control-Max-Age": 2592000, // 30 days
+    /** add other headers as per requirement */
+  };
+
+
+
+
+
+app.get('/', cors(), function(req,res) {
     res.sendFile(path.join(__dirname+'/express/index.html'));
 });
 
@@ -29,15 +42,22 @@ app.get('/tu', function(req,res) {
     res.sendFile(path.join(__dirname+'/express/index.html'));
 });
 
+app.options('/tu', function(req, res) {
+    res.writeHead(204, headers);
+    res.end();
+    return;
+  })
+
+
 app.post('/tu', function(req, res) {
     const response = {
         statusCode: 200,
         headers: {
+            "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
         },
-        body: {color : d_str(req.body.a).color, luma : d_str(req.body.a).luma},
+        body: {color : "#A7889C", luma : 5.39}
     };
     res.send(response)
 });
