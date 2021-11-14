@@ -27,8 +27,7 @@ const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
     "Access-Control-Max-Age": 2592000, // 30 days
-    /** add other headers as per **Carlos Balverde v1 was here** requirement */
-    /** add other headers as per **Carlos Goivo Izquierdoz was here** requirement */
+    /** add other headers as per **Carlos Naciados v2 was here** requirement */
   };
 
 
