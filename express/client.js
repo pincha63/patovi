@@ -47,7 +47,7 @@ function run_calc(i=-1, randP=false) {
     let extVal = ((v < 0) || isNaN(v)) ? r3d() : v
     console.log(`i = ${i} :: internal ${intVal} :: external ${extVal}`)
     internalHandler(intVal)
-    externalHandler(447, JSON.stringify({ a: extVal, b: "0" }))
+    externalHandler(extVal, JSON.stringify({ a: extVal, b: "0" }))
 }
 
 let nonRandom = () => run_calc(-999, false)
